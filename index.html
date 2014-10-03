@@ -42,73 +42,121 @@
 
 			<!-- Any section element inside of this container is displayed as a slide -->
 			<div class="slides">
+
 				<section>
-					<h1>Reveal.js</h1>
-					<h3>HTML Presentations Made Easy</h3>
+					<h1>SE(Scala)A</h1>
+					<h3>Just a brief introduction</h3>
 					<p>
-						<small>Created by <a href="http://hakim.se">Hakim El Hattab</a> / <a href="http://twitter.com/hakimel">@hakimel</a></small>
+          <small>Reach out to me on twitter / github <a>@scaryroy</a></small>
+					</p>
+				</section>
+
+				<section id="themes">
+					<h2>Themes</h2>
+					<p>
+						Reveal.js comes with a few themes built in: <br>
+						<a href="?#/themes">Default</a> -
+						<a href="?theme=sky#/themes">Sky</a> -
+						<a href="?theme=beige#/themes">Beige</a> -
+						<a href="?theme=simple#/themes">Simple</a> -
+						<a href="?theme=serif#/themes">Serif</a> -
+						<a href="?theme=night#/themes">Night</a> <br>
+						<a href="?theme=moon#/themes">Moon</a> -
+						<a href="?theme=solarized#/themes">Solarized</a>
 					</p>
 				</section>
 
 				<section>
-					<h2>Heads Up</h2>
-					<p>
-						reveal.js is a framework for easily creating beautiful presentations using HTML. You'll need a browser with
-						support for CSS 3D transforms to see it in its full glory.
-					</p>
-
-					<aside class="notes">
-						Oh hey, these are some notes. They'll be hidden in your presentation, but you can see them if you open the speaker notes window (hit 's' on your keyboard).
-					</aside>
-				</section>
-
-				<!-- Example of nested vertical slides -->
-				<section>
-					<section>
-						<h2>Vertical Slides</h2>
-						<p>
-							Slides can be nested inside of other slides,
-							try pressing <a href="#" class="navigate-down">down</a>.
-						</p>
-						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 1</h2>
-						<p>Press down or up to navigate.</p>
-					</section>
-					<section>
-						<h2>Basement Level 2</h2>
-						<p>Cornify</p>
-						<a class="test" href="http://cornify.com">
-							<img width="280" height="326" src="https://s3.amazonaws.com/hakim-static/reveal-js/cornify.gif" alt="Unicorn">
-						</a>
-					</section>
-					<section>
-						<h2>Basement Level 3</h2>
-						<p>That's it, time to go back up.</p>
-						<a href="#/2" class="image">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Up arrow" style="-webkit-transform: rotate(180deg);">
-						</a>
-					</section>
+					<h1>who am i?</h1>
 				</section>
 
 				<section>
-					<h2>Slides</h2>
-					<p>
-						Not a coder? No problem. There's a fully-featured visual editor for authoring these, try it out at <a href="http://slid.es" target="_blank">http://slid.es</a>.
-					</p>
+					<h2>Map</h2>
+					<pre><code data-trim contenteditable class="scala">
+val list = List(1,2,3)
+
+def timesTwo(i: Int) = i * 2
+list.map(timesTwo)
+
+list.map(i => i * 2)
+
+list.map(_ * 2)
+
+// Our answer
+
+list.filter(_ % 2 == 0).map(_ * 2)
+					</code></pre>
 				</section>
 
 				<section>
-					<h2>Point of View</h2>
-					<p>
-						Press <strong>ESC</strong> to enter the slide overview.
-					</p>
-					<p>
-						Hold down alt and click on any element to zoom in on it using <a href="http://lab.hakim.se/zoom-js">zoom.js</a>. Alt + click anywhere to zoom back out.
-					</p>
+					<h1>Parallisation?</h1>
+				</section>
+
+				<section>
+					<h2>My best attempt in Java in 2 minutes...</h2>
+					<pre><code data-trim contenteditable class="java">
+
+public class TimesTenWorker implements Runnable {
+	private Integer i;
+	public WorkerThread(int i) { this.i = i }
+	public void run() {..............................}
+}
+
+List&lt;Integer&gt; list = Arrays.asList(1,2,3);
+ExecutorService executor = Executors.newFixedThreadPool(5);
+for (Integer i: list) {
+	executor.execute(new TimesTenWorker(i));
+}
+executor.shutdown();
+while (!executor.isTerminated()) {}
+
+// Acutally I'm not too sure what im doing...
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>In Scala...</h2>
+					<pre><code data-trim contenteditable class="scala">
+list.par.filter(_ % 2 == 0).map(_ * 2)
+					</code></pre>
+				</section>
+
+				<section>
+					<h2>Flexibility</h2>
+					<p><b>By definition in Wikipedia:</b></p>
+					<p><i>&ldquo;In the field of engineering systems design, it refers to designs that can adapt when external changes occur.&rdquo;</i></p>
+				</section>
+
+				<section>
+					<h1>Abstractions</h1>
+				</section>
+
+				<section>
+					<section>
+						<h2>What do we have to worry about in a C program?</h2>
+						<pre><code language="c">
+char array_place[100] = "don't panic";
+char* ptr_place = "don't panic";
+
+int main()
+{
+    char a = array_place[7];
+    char b = ptr_place[7];
+
+    return 0;
+}
+						</code></pre>
+					</section>
+					<section>
+						<h2>What do we have to worry about in a C program?</h2>
+						<ul>
+							<li>Pre-declare variables</li>
+							<li>Memory allocation in malloc and alloc</li>
+							<li>Pointers (to the wrong address?)</li>
+							<li>Strings (or Char arrays), you need to terminate them with null</li>
+							<li>Overflowing buffers</li>
+						</ul>
+					</section>
 				</section>
 
 				<section>
@@ -169,25 +217,6 @@
 					</p>
 				</section>
 
-				<section id="themes">
-					<h2>Themes</h2>
-					<p>
-						Reveal.js comes with a few themes built in: <br>
-						<a href="?#/themes">Default</a> -
-						<a href="?theme=sky#/themes">Sky</a> -
-						<a href="?theme=beige#/themes">Beige</a> -
-						<a href="?theme=simple#/themes">Simple</a> -
-						<a href="?theme=serif#/themes">Serif</a> -
-						<a href="?theme=night#/themes">Night</a> <br>
-						<a href="?theme=moon#/themes">Moon</a> -
-						<a href="?theme=solarized#/themes">Solarized</a>
-					</p>
-					<p>
-						<small>
-							* Theme demos are loaded after the presentation which leads to flicker. In production you should load your theme in the <code>&lt;head&gt;</code> using a <code>&lt;link&gt;</code>.
-						</small>
-					</p>
-				</section>
 
 				<section>
 					<h2>Global State</h2>
@@ -208,40 +237,6 @@ Reveal.addEventListener( 'customevent', function() {
 	console.log( '"customevent" has fired' );
 } );
 					</code></pre>
-				</section>
-
-				<section>
-					<section data-background="#007777">
-						<h2>Slide Backgrounds</h2>
-						<p>
-							Set <code>data-background="#007777"</code> on a slide to change the full page background to the given color. All CSS color formats are supported.
-						</p>
-						<a href="#" class="image navigate-down">
-							<img width="178" height="238" src="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" alt="Down arrow">
-						</a>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png">
-						<h2>Image Backgrounds</h2>
-						<pre><code>&lt;section data-background="image.png"&gt;</code></pre>
-					</section>
-					<section data-background="https://s3.amazonaws.com/hakim-static/reveal-js/arrow.png" data-background-repeat="repeat" data-background-size="100px">
-						<h2>Repeated Image Backgrounds</h2>
-						<pre><code style="word-wrap: break-word;">&lt;section data-background="image.png" data-background-repeat="repeat" data-background-size="100px"&gt;</code></pre>
-					</section>
-				</section>
-
-				<section data-transition="linear" data-background="#4d7e65" data-background-transition="slide">
-					<h2>Background Transitions</h2>
-					<p>
-						Pass reveal.js the <code>backgroundTransition: 'slide'</code> config argument to make backgrounds slide rather than fade.
-					</p>
-				</section>
-
-				<section data-transition="linear" data-background="#8c4738" data-background-transition="slide">
-					<h2>Background Transition Override</h2>
-					<p>
-						You can override background transitions per slide by using <code>data-background-transition="slide"</code>.
-					</p>
 				</section>
 
 				<section>
